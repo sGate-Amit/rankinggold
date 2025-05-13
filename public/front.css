@@ -1,8 +1,8 @@
 /* ------------------------------------- */
 /* CONTENT INTERFACE */
 /* ------------------------------------- */
-@import url("buttons_styles.css");
-@import url("optin_styles.css");
+@import url("../buttons_styles.css");
+@import url("../optin_styles.css");
 body {
     height: 100%;
     width: 100%;
@@ -20,7 +20,7 @@ a:focus {
     width: 16px;
     padding: 0;
     margin: 0;
-    background: url(../images/icon.png) no-repeat center center;
+    background: url(../icon.png) no-repeat center center;
 }
 #pbuilder_body {
     box-sizing: border-box;
@@ -86,7 +86,7 @@ a:focus {
 }
 #pbuilder_wrapper.empty {
     padding-top: 230px;
-    background:transparent url(../images/empty.png) no-repeat center top;
+    background:transparent url(../empty.png) no-repeat center top;
 }
 #pbuilder_content {
     margin:0;
