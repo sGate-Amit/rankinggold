@@ -14,10 +14,11 @@ export const POST: APIRoute = async ({ request }) => {
     port: 587,
     secure: false,
     auth: {
-      user: "emailapikey",
-      pass: "PHtE6r0OSuG/gzMqoxQF46XtQsOiPIJ8+79kLlRBs4pHAvUDGU0A+d95kGLlqRgpBPRHRqSTzo1v4OiUt76MI2i4M2YfXWqyqK3sx/VYSPOZsbq6x00bt1kffkffU4TmcN9t0ifSud/dNA==",
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
   });
+  
   try {
     await transporter.sendMail({
       from: `"${name}" <${email}>`,
