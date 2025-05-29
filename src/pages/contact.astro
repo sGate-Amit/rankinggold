@@ -1,33 +1,7 @@
 ---
 // Server-side form handling (runs only on POST requests)
-import nodemailer from 'nodemailer';
 
 if (Astro.request.method === 'POST') {
-  const formData = await Astro.request.formData();
-  const name = formData.get('name');
-  const email = formData.get('email');
-  const message = formData.get('message');
-
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'your.email@gmail.com',
-        pass: 'your-app-password',
-      },
-    });
-
-    await transporter.sendMail({
-      from: `"Contact Form" <your.email@gmail.com>`,
-      to: 'your.email@gmail.com',
-      subject: `New message from ${name}`,
-      html: `<p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
-    });
-
-    console.log("✅ Email sent successfully.");
-  } catch (err) {
-    console.error("❌ Email send failed:", err);
-  }
 }
 ---
 
