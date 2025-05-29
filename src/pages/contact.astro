@@ -11,6 +11,7 @@
     e.preventDefault();
 
     const data = new FormData(form);
+      alert(data.name);
     const res = await fetch('/api/contact', {
       method: 'POST',
       body: data
