@@ -6,48 +6,38 @@ export async function POST({ request }) {
   const subject = data.get('subject');
   const message = data.get('message');
 
-  console.log('Form data:', { name, email, subject, message });
+  console.log('📨 Contact Form Submitted:', { name, email, subject, message });
 
-  // You can send email, save data, etc. here
+  // You could send an email, store in DB, etc. here
 
-  // Return a redirect or a response
   return new Response(null, {
     status: 303,
     headers: {
-      location: '/contact?success=1',
+      Location: '/contact?success=1',
     },
   });
 }
 
-const url = new URL(Astro.request.url);
-const success = url.searchParams.get('success');
+const success = new URL(Astro.request.url).searchParams.get('success');
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Contact Us</title>
-  </head>
-  <body>
-    <h1>Contact Us</h1>
-    {success && <p style="color:green;">Message sent successfully!</p>}
-    <form method="POST">
-      <label>
-        Name:<br />
-        <input name="name" required />
-      </label><br /><br />
-      <label>
-        Email:<br />
-        <input name="email" type="email" required />
-      </label><br /><br />
-      <label>
-        Subject:<br />
-        <input name="subject" />
-      </label><br /><br />
-      <label>
-        Message:<br />
-        <textarea name="message" required></textarea>
-      </label><br /><br />
-      <button type="submit">Send</button>
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Contact</title>
+</head>
+<body>
+  <h1>Contact Us</h1>
+
+  {success && <p style="color:green;">✅ Message sent successfully!</p>}
+
+  <form method="POST">
+    <label>Name: <input name="name" required /></label><br /><br />
+    <label>Email: <input name="email" type="email" required /></label><br /><br />
+    <label>Subject: <input name="subject" /></label><br /><br />
+    <label>Message: <textarea name="message" required></textarea></label><br /><br />
+    <button type="submit">Send</button>
+  </form>
+</body>
 </html>
