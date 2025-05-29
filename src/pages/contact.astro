@@ -1,37 +1,33 @@
 ---
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("username");
+    const email = data.get("email");
+    const password = data.get("password");
+  console.log('Name:', name);
+  console.log('Email:', email);
+    // Do something with the data
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
 ---
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Contact</title>
-  </head>
-  <body>
-    <h1>Contact Us</h1>
-
-    <form method="POST" action="/api/contact">
-      <label>
-        Name:<br />
-        <input type="text" name="name" required />
-      </label><br /><br />
-
-      <label>
-        Email:<br />
-        <input type="email" name="email" required />
-      </label><br /><br />
-
-      <label>
-        Subject:<br />
-        <input type="text" name="subject" />
-      </label><br /><br />
-
-      <label>
-        Message:<br />
-        <textarea name="message" rows="5" required></textarea>
-      </label><br /><br />
-
-      <button type="submit">Send</button>
-    </form>
-  </body>
-</html>
+<h1>Register</h1>
+<form method="POST">
+  <label>
+    Username:
+    <input type="text" name="username" required />
+  </label>
+  <label>
+    Email:
+    <input type="email" name="email" required />
+  </label>
+  <label>
+    Password:
+    <input type="password" name="password" required minlength="6" />
+  </label>
+  <button>Submit</button>
+</form>
