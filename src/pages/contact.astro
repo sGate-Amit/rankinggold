@@ -1,43 +1,25 @@
----
-export async function POST({ request }) {
-  const data = await request.formData();
-  const name = data.get('name');
-  const email = data.get('email');
-  const subject = data.get('subject');
-  const message = data.get('message');
+<form id="contactForm">
+  <input name="name" required />
+  <input name="email" type="email" required />
+  <textarea name="message" required></textarea>
+  <button type="submit">Send</button>
+</form>
 
-  console.log('📨 Contact Form Submitted:', { name, email, subject, message });
+<script>
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  // You could send an email, store in DB, etc. here
+    const data = new FormData(form);
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      body: data
+    });
 
-  return new Response(null, {
-    status: 303,
-    headers: {
-      Location: '/contact?success=1',
-    },
+    if (res.ok) {
+      alert('Form submitted!');
+    } else {
+      alert('Submission failed.');
+    }
   });
-}
-
-const success = new URL(Astro.request.url).searchParams.get('success');
----
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Contact</title>
-</head>
-<body>
-  <h1>Contact Us</h1>
-
-  {success && <p style="color:green;">✅ Message sent successfully!</p>}
-
-  <form method="POST">
-    <label>Name: <input name="name" required /></label><br /><br />
-    <label>Email: <input name="email" type="email" required /></label><br /><br />
-    <label>Subject: <input name="subject" /></label><br /><br />
-    <label>Message: <textarea name="message" required></textarea></label><br /><br />
-    <button type="submit">Send</button>
-  </form>
-</body>
-</html>
+</script>
