@@ -185,6 +185,20 @@
       <style></style>
       <script type="text/javascript">
          var hidetopbar = '1';
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("name");
+    const email = data.get("email");
+    const password = data.get("password");
+
+    console.log("name:", name);
+  } catch (error) {
+    console.error("Email send failed:", error);
+    return new Response("Error sending email.", { status: 500 });
+  }
+}
+---
       </script>
       <style id="pbuilder_dynamic_row_css" type="text/css">.pbuilder_row.pbuilder_row_full_width{margin:0 NaNpx;} .pbuilder_row .pbuilder_row_video > div {width:1572px; height:649px; margin:-324.5px 0 0 -786px !important;} </style>
    </head>
@@ -198,7 +212,7 @@
                         <p role="status" aria-live="polite" aria-atomic="true"></p>
                         <ul></ul>
                      </div>
-                     <form action="/api/contact" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
+                     <form action="" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
                         <p>Your Name (required)<br>
                            <span class="wpcf7-form-control-wrap your-name"><input type="text" name="name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false"></span> 
                         </p>
