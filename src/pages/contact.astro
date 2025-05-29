@@ -1,19 +1,36 @@
-
 ---
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const name = data.get("name");
-    const email = data.get("email");
-    const password = data.get("password");
+// Server-side form handling (runs only on POST requests)
+import nodemailer from 'nodemailer';
 
-    console.log("name:", name);
-  } catch (error) {
-    console.error("Email send failed:", error);
-    return new Response("Error sending email.", { status: 500 });
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const name = formData.get('name');
+  const email = formData.get('email');
+  const message = formData.get('message');
+
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'your.email@gmail.com',
+        pass: 'your-app-password',
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Contact Form" <your.email@gmail.com>`,
+      to: 'your.email@gmail.com',
+      subject: `New message from ${name}`,
+      html: `<p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
+    });
+
+    console.log("✅ Email sent successfully.");
+  } catch (err) {
+    console.error("❌ Email send failed:", err);
   }
 }
 ---
+
 <!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns#" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths">
    <head>
