@@ -1,33 +1,74 @@
 ---
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const name = data.get("username");
-    const email = data.get("email");
-    const password = data.get("password");
-  console.log('Name:', name);
-  console.log('Email:', email);
-    // Do something with the data
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-  }
-}
+// No frontmatter needed
 ---
-<h1>Register</h1>
-<form method="POST">
-  <label>
-    Username:
-    <input type="text" name="username" required />
-  </label>
-  <label>
-    Email:
-    <input type="email" name="email" required />
-  </label>
-  <label>
-    Password:
-    <input type="password" name="password" required minlength="6" />
-  </label>
-  <button>Submit</button>
-</form>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact</title>
+</head>
+<body>
+  <h1>Contact Us</h1>
+
+  <form id="contact-form">
+    <label>
+      Name:<br />
+      <input type="text" name="name" required />
+    </label><br /><br />
+
+    <label>
+      Email:<br />
+      <input type="email" name="email" required />
+    </label><br /><br />
+
+    <label>
+      Subject:<br />
+      <input type="text" name="subject" />
+    </label><br /><br />
+
+    <label>
+      Message:<br />
+      <textarea name="message" rows="5" required></textarea>
+    </label><br /><br />
+
+    <button type="submit">Send</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script type="module">
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          status.textContent = '✅ Message sent!';
+          form.reset();
+        } else {
+          status.textContent = '❌ Error: ' + (result.message || 'Failed to send.');
+        }
+      } catch (err) {
+        status.textContent = '❌ Network error. Please try again.';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
