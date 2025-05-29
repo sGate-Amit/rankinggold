@@ -1,6 +1,19 @@
 
+---
 if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("name");
+    const email = data.get("email");
+    const password = data.get("password");
+
+    console.log("name:", name);
+  } catch (error) {
+    console.error("Email send failed:", error);
+    return new Response("Error sending email.", { status: 500 });
+  }
 }
+---
 <!DOCTYPE html>
 <html lang="en-US" prefix="og: http://ogp.me/ns#" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths">
    <head>
