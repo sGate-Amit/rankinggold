@@ -199,7 +199,7 @@
          <div class="pbtheme_container" style="">
             <div id="content" class="post-9 page type-page status-publish hentry">
                <div class='gf_browser_gecko gform_wrapper' id='gform_wrapper_2' >
-                  <form method='post' enctype='multipart/form-data'  id='gform_2'  action='/order'>
+                  <form  id="orderForm" method='post' enctype='multipart/form-data'  id='gform_2'  action='/order'>
                      <div class='gform_body'>
                         <ul id='gform_fields_2' class='gform_fields top_label form_sublabel_below description_below'>
                            <li id='field_2_1' class='gfield gfield_price gfield_price_2_1 gfield_product_2_1 gfield_contains_required field_sublabel_below field_description_below' >
@@ -300,6 +300,28 @@
                      </div>
                   </form>
                </div>
+               <script>
+  const form = document.getElementById('orderForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    // console.log([...data.entries()]);
+
+    const res = await fetch('https://api.app.quicktikk.com/api/send-mail', {
+      method: 'POST',
+      body: data
+    });
+
+    if (res.ok) {
+      form.reset();
+      alert('Order submitted successfully!');
+    } else {
+      alert('Submission failed.');
+    }
+  });
+</script>
+
                <script type='text/javascript'> if(typeof gf_global == 'undefined') var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2},"base_url":"https:\/\/www.rankinggold.com\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.rankinggold.com\/wp-content\/plugins\/gravityforms\/images\/spinner.gif"};jQuery(document).bind('gform_post_render', function(event, formId, currentPage){if(formId == 2) {if(window["gformInitPriceFields"]) jQuery(document).ready(function(){gformInitPriceFields();} );} } );jQuery(document).bind('gform_post_conditional_logic', function(event, formId, fields, isInit){} );</script><script type='text/javascript'> jQuery(document).ready(function(){jQuery(document).trigger('gform_post_render', [2, 1]) } ); </script>
             </div>
          </div>
