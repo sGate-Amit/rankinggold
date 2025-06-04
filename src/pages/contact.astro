@@ -223,7 +223,8 @@
            form.addEventListener('submit', async (e) => {
              e.preventDefault();
          
-             const data = new FormData(form);alert(data.get('name'));
+             const data = new FormData(form);
+//alert(data.get('name'));
          
              const res = await fetch('https://api.app.quicktikk.com/api/send-mail', {
                method: 'POST',
@@ -231,7 +232,8 @@
              });
          
              if (res.ok) {
-               alert('Form submitted!');
+      form.reset(); 
+              // alert('Form submitted!');
              } else {
                alert('Submission failed.');
              }
