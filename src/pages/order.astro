@@ -300,17 +300,56 @@
                      </div>
                   </form>
                </div>
-               <script>
+              <script>
   const form = document.getElementById('orderForm');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const data = new FormData(form);
-    // console.log([...data.entries()]);
 
+    // Get individual fields
+    const packageValue = data.get('input_1'); // Format: "GOLD|349"
+    const quantity = data.get('input_3');
+    const total = data.get('input_2');
+    const name = data.get('input_4');
+    const forum = data.get('input_9');
+    const forumUsername = data.get('input_8');
+    const email = data.get('input_5');
+    const url = data.get('input_6');
+    const anchorTexts = data.get('input_7');
+    const instructions = data.get('input_10');
+
+    // Format message
+    const message = `
+New Order Received:
+---------------------
+Package: ${packageValue}
+Quantity: ${quantity}
+Total: $${total}
+
+Customer Name: ${name}
+Email: ${email}
+Forum: ${forum}
+Forum Username: ${forumUsername}
+
+URL: ${url}
+Anchor Texts: ${anchorTexts}
+
+Special Instructions:
+${instructions || 'N/A'}
+`;
+
+    // POST message as JSON
     const res = await fetch('https://api.app.quicktikk.com/api/send-mail', {
       method: 'POST',
-      body: data
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        subject: `New Order from ${name}`,
+        email: email, // Optional: if API expects sender/recipient
+        message: message
+      }),
     });
 
     if (res.ok) {
@@ -321,6 +360,7 @@
     }
   });
 </script>
+
 
                <script type='text/javascript'> if(typeof gf_global == 'undefined') var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2},"base_url":"https:\/\/www.rankinggold.com\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.rankinggold.com\/wp-content\/plugins\/gravityforms\/images\/spinner.gif"};jQuery(document).bind('gform_post_render', function(event, formId, currentPage){if(formId == 2) {if(window["gformInitPriceFields"]) jQuery(document).ready(function(){gformInitPriceFields();} );} } );jQuery(document).bind('gform_post_conditional_logic', function(event, formId, fields, isInit){} );</script><script type='text/javascript'> jQuery(document).ready(function(){jQuery(document).trigger('gform_post_render', [2, 1]) } ); </script>
             </div>
