@@ -320,22 +320,22 @@
     const anchorTexts = data.get('input_7');
     const instructions = data.get('input_10');
 
-    const message = 
-`New Order Received:
+const message = 
+`New Order Received:<br><br>
+------------------------------<br>
+Package: ${packageValue}<br>
+Quantity: ${quantity}<br>
+Total: $${total}<br><br>
 
-------------------------------
-Package: ${packageValue}
-Quantity: ${quantity}
-Total: $${total}
-
-Customer Name: ${name}
-Email: ${email}
-Forum: ${forum}
-Forum Username: ${forumUsername}
-URL: ${url}
-Anchor Texts: ${anchorTexts}
-Special Instructions: ${instructions || 'None'}
+Customer Name: ${name}<br>
+Email: ${email}<br>
+Forum: ${forum}<br>
+Forum Username: ${forumUsername}<br>
+URL: ${url}<br>
+Anchor Texts: ${anchorTexts}<br>
+Special Instructions: ${instructions || 'None'}<br>
 `;
+
 
  //   alert(message); 
    // alert(name); 
